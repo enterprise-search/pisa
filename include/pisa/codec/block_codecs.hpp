@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <numeric>
 
 #include "FastPFor/headers/optpfor.h"
 #include "FastPFor/headers/variablebyte.h"
@@ -125,10 +126,7 @@ struct interpolative_block {
         thread_local std::array<std::uint32_t, block_size> inbuf{};
         thread_local std::vector<uint32_t> outbuf;  // TODO: Can we use array? How long does it need
                                                     // to be?
-        inbuf[0] = *in;
-        for (size_t i = 1; i < n; ++i) {
-            inbuf[i] = inbuf[i - 1] + in[i];
-        }
+        std::partial_sum(in, in+n, std::begin(inbuf));
 
         if (sum_of_values == uint32_t(-1)) {
             sum_of_values = inbuf[n - 1];
