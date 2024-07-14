@@ -19,7 +19,7 @@ namespace pisa { namespace mapper {
         class sizeof_visitor;
     }  // namespace detail
 
-    using deleter_t = boost::function<void()>;
+    using deleter_t = std::function<void()>;
 
     template <typename T>  // T must be a POD
     class mappable_vector {
@@ -40,13 +40,13 @@ namespace pisa { namespace mapper {
             T* data = new T[size];
             m_deleter = boost::lambda::bind(boost::lambda::delete_array(), data);
 
-            std::copy(boost::begin(from), boost::end(from), data);
+            std::copy(std::begin(from), std::end(from), data);
             m_data = data;
             m_size = size;
         }
 
         ~mappable_vector() {
-            if (not m_deleter.empty()) {
+            if (m_deleter) {
                 m_deleter();
             }
         }
