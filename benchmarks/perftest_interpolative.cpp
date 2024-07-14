@@ -1,12 +1,12 @@
 #include <algorithm>
 #include <iostream>
 #include <numeric>
+#include <chrono>
 
 #include "spdlog/spdlog.h"
 
 #include "codec/block_codecs.hpp"
 #include "util/do_not_optimize_away.hpp"
-#include "util/util.hpp"
 
 int main()
 {
@@ -22,13 +22,14 @@ int main()
         uint32_t sum_of_values = std::accumulate(values.begin(), values.end(), 0);
         interpolative_block::encode(values.data(), sum_of_values, values.size(), encoded);
 
-        double tick = get_time_usecs();
+        auto start = std::chrono::steady_clock::now();
         for (size_t run = 0; run < runs; ++run) {
             interpolative_block::decode(encoded.data(), values.data(), sum_of_values, values.size());
             do_not_optimize_away(values[0]);
         }
 
-        double time = (get_time_usecs() - tick) / runs * 1000;
-        spdlog::info("u = {}; time = {}", u, time);
+        auto end = std::chrono::steady_clock::now();
+        const std::chrono::duration<double> took = end - start;
+        spdlog::info("u = {}; time = {}s", u, took.count());
     }
 }
