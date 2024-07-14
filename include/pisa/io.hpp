@@ -5,8 +5,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
-#include <gsl/span>
+#include <span>
 
 namespace pisa::io {
 
@@ -45,6 +44,6 @@ void for_each_line(std::istream& is, Function fn) {
 [[nodiscard]] auto load_data(std::string const& data_file) -> std::vector<char>;
 
 /// Writes bytes to a file.
-void write_data(std::string const& data_file, gsl::span<std::byte const> bytes);
+void write_data(std::string const& data_file, std::span<std::byte const> bytes);
 
 }  // namespace pisa::io
