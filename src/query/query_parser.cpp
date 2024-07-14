@@ -39,8 +39,4 @@ auto QueryParser::parse(std::string_view query) -> Query {
     return Query(qid ? std::optional<std::string>(*qid) : std::nullopt, term_ids);
 }
 
-auto QueryParser::parse(std::string const& query) -> Query {
-    return parse(std::string_view(query));
-}
-
 }  // namespace pisa

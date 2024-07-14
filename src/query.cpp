@@ -66,7 +66,7 @@ void dedup_by_term_id(std::vector<WeightedTerm>& terms) {
     terms.erase(out, terms.end());
 }
 
-void Query::postprocess(query::TermPolicy policy) {
+void Query::rewrite(query::TermPolicy policy) {
     if (!policy.contains(query::keep_duplicates)) {
         if (!policy.contains(query::unweighted)) {
             accumulate_weights(m_terms);

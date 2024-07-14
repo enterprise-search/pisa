@@ -26,7 +26,6 @@ class QueryParser {
     explicit QueryParser(TextAnalyzer analyzer);
 
     [[nodiscard]] auto parse(std::string_view query) -> Query;
-    [[nodiscard]] auto parse(std::string const& query) -> Query;
 };
 
 }  // namespace pisa

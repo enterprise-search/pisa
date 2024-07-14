@@ -105,7 +105,7 @@ class Query {
     std::optional<std::string> m_id{};
     std::vector<WeightedTerm> m_terms{};
 
-    void postprocess(query::TermPolicy policy);
+    void rewrite(query::TermPolicy policy);
 
   public:
     /** Constructs a query with the given ID from the terms and weights given by the iterators.
@@ -130,7 +130,7 @@ class Query {
                 return WeightedTerm{id, weight};
             }
         );
-        postprocess(policy);
+        rewrite(policy);
     }
 
     /** Constructs a query with the given ID from the terms given by the iterators. */
@@ -147,7 +147,7 @@ class Query {
         std::transform(first, last, std::back_inserter(m_terms), [](auto id) {
             return WeightedTerm{id, 1.0};
         });
-        postprocess(policy);
+        rewrite(policy);
     }
 
     /** Constructs a query with the given ID from the terms and weights passed as collections.

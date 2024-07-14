@@ -21,14 +21,11 @@ namespace pisa {
 
 auto split_at_colon(std::string_view str)
     -> std::pair<std::optional<std::string_view>, std::string_view> {
-    auto colon = std::find(str.begin(), str.end(), ':');
-    std::optional<std::string_view> id;
-    if (colon != str.end()) {
-        id = std::string_view(str.begin(), std::distance(str.begin(), colon));
-    }
-    auto pos = colon == str.end() ? str.begin() : std::next(colon);
-    auto raw_query = std::string_view(&*pos, std::distance(pos, str.end()));
-    return {id, raw_query};
+        auto p = str.find(':');
+        if (p == str.npos) {
+            return {std::nullopt, str};
+        }
+        return {str.substr(0, p), str.substr(p+1)};
 }
 
 }  // namespace pisa
