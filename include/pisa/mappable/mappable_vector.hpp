@@ -15,8 +15,6 @@ namespace pisa { namespace mapper {
         class sizeof_visitor;
     }  // namespace detail
 
-    using deleter_t = std::function<void()>;
-
     template <typename T>  // T must be a POD
     class mappable_vector {
       public:
@@ -98,7 +96,7 @@ namespace pisa { namespace mapper {
       protected:
         const T* m_data;
         uint64_t m_size;
-        deleter_t m_deleter;
+        std::function<void()> m_deleter;
     };
 
 }}  // namespace pisa::mapper
