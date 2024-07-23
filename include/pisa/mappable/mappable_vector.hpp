@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <vector>
+#include <functional>
 #include "boost/lambda/construct.hpp"
 #include "boost/range.hpp"
 #include "boost/utility.hpp"
